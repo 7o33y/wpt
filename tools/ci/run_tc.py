@@ -92,7 +92,7 @@ def get_parser():
                    help="Browsers that will be used in the job")
     p.add_argument("--channel",
                    default=None,
-                   choices=["experimental", "dev", "nightly", "beta", "stable"],
+                   choices=["experimental", "canary", "dev", "nightly", "beta", "stable"],
                    help="Chrome browser channel")
     p.add_argument("--xvfb",
                    action="store_true",
@@ -146,25 +146,20 @@ def start_dbus():
     # https://source.chromium.org/chromium/chromium/src/+/main:content/app/content_main.cc;l=220;drc=0bcc023b8cdbc073aa5c48db373810db3f765c87.
     os.environ["DBUS_SESSION_BUS_ADDRESS"] = "autolaunch:"
 
-
 def install_chrome(channel):
-    if channel in ("experimental", "dev"):
-        deb_archive = "google-chrome-unstable_current_amd64.deb"
-    elif channel == "beta":
-        deb_archive = "google-chrome-beta_current_amd64.deb"
-    elif channel == "stable":
-        deb_archive = "google-chrome-stable_current_amd64.deb"
-    else:
-        raise ValueError("Unrecognized release channel: %s" % channel)
+    # Interpret experimental channels as Canary.
+    if channel in ("experimental", "nightly", "canary"):
+        channel = "canary"
+    run(["sh", "-c", f"./wpt install --channel {channel} chrome browser"])
 
-    dest = os.path.join("/tmp", deb_archive)
-    deb_url = "https://dl.google.com/linux/direct/%s" % deb_archive
-    with open(dest, "wb") as f:
-        get_download_to_descriptor(f, deb_url)
-
-    run(["sudo", "apt-get", "-qqy", "update"])
-    run(["sudo", "gdebi", "-qn", "/tmp/%s" % deb_archive])
-
+    file_names = os.listdir(os.path.join(os.getcwd(),
+                                         f"_venv3/browsers/{channel}/chrome-linux64"))
+    # Move all files from the Chrome for Testing download to the same directory.
+    for file_name in file_names:
+        path = os.path.join(os.getcwd(),
+                            f"_venv3/browsers/{channel}/chrome-linux64",
+                            file_name)
+        run(["sudo", "mv", path, "/usr/bin"])
 
 def start_xvfb():
     start(["sudo", "Xvfb", os.environ["DISPLAY"], "-screen", "0",

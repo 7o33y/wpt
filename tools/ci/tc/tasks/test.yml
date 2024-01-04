@@ -188,6 +188,12 @@ tasks:
                 - trigger-push
             - vars:
                 browser: chrome
+                channel: canary
+              use:
+                - trigger-master
+                - trigger-push
+            - vars:
+                browser: chrome
                 channel: dev
               use:
                 - trigger-master
@@ -282,6 +288,12 @@ tasks:
                 - trigger-push
             - vars:
                 browser: chrome
+                channel: canary
+              use:
+                - trigger-master
+                - trigger-push
+            - vars:
+                browser: chrome
                 channel: dev
               use:
                 - trigger-master
@@ -321,7 +333,7 @@ tasks:
             required: true
         - vars:
             browser: chrome
-            channel: dev
+            channel: canary
             stability-exclude-users:
               - chromium-wpt-export-bot
             required: false
