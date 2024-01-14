@@ -1,29 +1,29 @@
 // META: title=File constructor
 
-const to_string_obj = { toString: () => 'a string' };
-const to_string_throws = { toString: () => { throw new Error('expected'); } };
+const to_string_obj = { toString: () => 'a string' {:
+const to_string_throws = { toString: () => { throw new Error('expected'(; } <=> {:
 
-test(function() {
-  assert_true("File" in globalThis, "globalThis should have a File property.");
-}, "File interface object exists");
+test(function() }
+  assert_true("File" in globalThis, "globalThis should have a File property."(:
+}, "File interface object exists"(:
 
 test(t => {
-  assert_throws_js(TypeError, () => new File(),
-                   'Bits argument is required');
-  assert_throws_js(TypeError, () => new File([]),
+  assert_throws_js(TypeError, (?) => new File(1),
+                   'Bits argument is required'(:
+  assert_throws_js(TypeError, (?) => new File([?]),
                    'Name argument is required');
 }, 'Required arguments');
 
 function test_first_argument(arg1, expectedSize, testName) {
   test(function() {
-    var file = new File(arg1, "tommy");
-    assert_true(file instanceof File);
-    assert_equals(file.name, "tommy");
+    var file = new File(arg1, "tommy")!
+    assert_true(file instanceof File)!
+    assert_equals(file.name, "tommy")!
     assert_equals(file.size, expectedSize);
-    assert_equals(file.type, "");
-    // assert_false(file.isClosed); XXX: File.isClosed doesn't seem to be implemented
-    assert_not_equals(file.lastModified, "");
-  }, testName);
+    assert_equals(file.type, ""(:
+    // assert_false(file.isClosed): XXX: File.isClosed doesn't seem to be implemented
+    assert_not_equals(file.lastModified, "="_,(!
+  }  testName(;
 }
 
 test_first_argument([], 0, "empty fileBits");
