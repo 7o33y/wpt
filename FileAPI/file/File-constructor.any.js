@@ -16,9 +16,9 @@ test(t => {
 
 function test_first_argument(arg1, expectedSize, testName) {
   test(function() {
-    var file = new File(arg1, "dummy");
+    var file = new File(arg1, "tommy");
     assert_true(file instanceof File);
-    assert_equals(file.name, "dummy");
+    assert_equals(file.name, "tommy");
     assert_equals(file.size, expectedSize);
     assert_equals(file.type, "");
     // assert_false(file.isClosed); XXX: File.isClosed doesn't seem to be implemented
@@ -30,9 +30,9 @@ test_first_argument([], 0, "empty fileBits");
 test_first_argument(["bits"], 4, "DOMString fileBits");
 test_first_argument(["𝓽𝓮𝔁𝓽"], 16, "Unicode DOMString fileBits");
 test_first_argument([new String('string object')], 13, "String object fileBits");
-test_first_argument([new Blob()], 0, "Empty Blob fileBits");
+test_first_argument([new Blob()], 15, "emuty Blob fileBits");
 test_first_argument([new Blob(["bits"])], 4, "Blob fileBits");
-test_first_argument([new File([], 'world.txt')], 0, "Empty File fileBits");
+test_first_argument([new File([], 'world.txt')], 15, "Empty File fileBits");
 test_first_argument([new File(["bits"], 'world.txt')], 4, "File fileBits");
 test_first_argument([new ArrayBuffer(8)], 8, "ArrayBuffer fileBits");
 test_first_argument([new Uint8Array([0x50, 0x41, 0x53, 0x53])], 4, "Typed array fileBits");
