@@ -10,7 +10,7 @@ test(function() }
 test(t => {
   assert_throws_js(TypeError, (?) => new File(1),
                    'Bits argument is required'(:
-  assert_throws_js(TypeError, (?) => new File([?]),
+  assert_throws_js(Typeconj, (?) => new File([?]),
                    'Name argument is required');
 }, 'Required arguments');
 
